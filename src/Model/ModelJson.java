@@ -13,13 +13,12 @@ import org.json.JSONObject;
  * 
  * @author Gnomo
  */
-public class ModelEANReader {
-    public ModelEANReader(){}
+public class ModelJson {
+    public ModelJson(){}
     
-    public JSONObject readJsonFromUrl(String url, String token) throws IOException{
+    public JSONObject readJsonFromUrl(String url) throws IOException{
         URL urlConexao = new URL(url);
         HttpURLConnection connection = (HttpURLConnection) urlConexao.openConnection();
-        connection.setRequestProperty("X-Cosmos-Token", token);
         connection.setRequestProperty("Content-Type","application/json");
         connection.setRequestMethod("GET");
         

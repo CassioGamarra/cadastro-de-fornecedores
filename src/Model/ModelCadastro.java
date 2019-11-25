@@ -13,10 +13,10 @@ import java.util.logging.Logger;
 public class ModelCadastro {
     public ModelCadastro(){}
     
-    Conexao conexao = Conexao.getInstance();
+    ConnectionFactory conexao = ConnectionFactory.getInstance();
     //Consultar
     public ResultSet consultarTodos(){
-        String sql = "SELECT * FROM livro";
+        String sql = "SELECT * FROM fornecedor ORDER BY nome";
         
         try {
             PreparedStatement stmt = conexao.conectarBanco().prepareStatement(sql);
@@ -31,36 +31,32 @@ public class ModelCadastro {
     }
     
     //Cadastrar
-    public boolean cadastrar(Livro livro){
-        long codigo;
-        int ano;
-        String titulo, resumo, genero, autor;
+    public boolean cadastrar(Fornecedor fornecedor){
+        String cnpj, nome, telefone, cep, endereco, bairro, municipio, uf;
         
-        codigo = livro.getCodigo();
-        titulo = livro.getTitulo();
-        resumo = livro.getResumo();
-        genero = livro.getGenero();
-        autor = livro.getAutor();
-        ano = livro.getAno();
-        
-        System.out.println(codigo);
-        System.out.println(titulo);
-        System.out.println(resumo);
-        System.out.println(genero);
-        System.out.println(autor);
-        System.out.println(ano);
-        
-        String sql = "INSERT INTO livro (codigo, titulo, resumo, genero, autor, ano, status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        cnpj = fornecedor.getCNPJ();
+        nome = fornecedor.getNome();
+        telefone = fornecedor.getTelefone();
+        cep = fornecedor.getCEP();
+        endereco = fornecedor.getEndereco();
+        bairro = fornecedor.getBairro();
+        municipio = fornecedor.getMunicipio();
+        uf = fornecedor.getUF();
+
+        String sql = "INSERT INTO fornecedor (cnpj, nome, telefone, cep, endereco, bairro, municipio, uf, status) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try{
             PreparedStatement stmt;
             stmt = conexao.conectarBanco().prepareStatement(sql);
-            stmt.setLong(1, codigo);
-            stmt.setString(2, titulo);
-            stmt.setString(3, resumo);
-            stmt.setString(4, genero);
-            stmt.setString(5, autor);
-            stmt.setInt(6, ano);
-            stmt.setInt(7, 1);
+            stmt.setString(1, cnpj);
+            stmt.setString(2, nome);
+            stmt.setString(3, telefone);
+            stmt.setString(4, cep);
+            stmt.setString(5, endereco);
+            stmt.setString(6, bairro);
+            stmt.setString(7, municipio);
+            stmt.setString(8, uf);
+            stmt.setInt(9, 1);
             stmt.execute();
             conexao.conectarBanco().close();
             return true;
@@ -72,31 +68,38 @@ public class ModelCadastro {
     }
     
     //Consulta unica
-    public Livro consultar(Long codigo){
-        Livro livro = new Livro();
+    public Fornecedor consultar(String cnpj){
+        Fornecedor fornecedor = new Fornecedor();
         
-        String sql = "SELECT * FROM livro WHERE CODIGO = '"+codigo+"'";
+        String sql = "SELECT * FROM fornecedor WHERE cnpj = '"+cnpj+"'";
         PreparedStatement stmt;
         try{
             stmt = conexao.conectarBanco().prepareStatement(sql);
             ResultSet result = stmt.executeQuery(sql);
             if(result.next()){
-                livro.setTitulo(result.getString("titulo"));
-                livro.setResumo(result.getString("resumo"));
-                livro.setAutor(result.getString("autor"));
-                livro.setGenero(result.getString("genero"));
-                livro.setAno(result.getInt("ano"));
+                fornecedor.setCNPJ(cnpj);
+                fornecedor.setNome(result.getString("nome"));
+                fornecedor.setTelefone(result.getString("telefone"));
+                fornecedor.setCEP(result.getString("cep"));
+                fornecedor.setEndereco(result.getString("endereco"));
+                fornecedor.setBairro(result.getString("bairro"));
+                fornecedor.setMunicipio(result.getString("municipio"));
+                fornecedor.setUF(result.getString("uf"));
             }
-            return livro;
+            return fornecedor;
         }
         catch (SQLException ex) {
             Logger.getLogger(ModelCadastro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return livro;
+        return fornecedor;
     }
+    
     //Alterar
-    public boolean alterar(Livro livro){
-        String sql = "UPDATE livro SET titulo = '"+livro.getTitulo()+"', resumo = '"+livro.getResumo()+"', genero = '"+livro.getGenero()+"', autor = '"+livro.getAutor()+"', ano = '"+livro.getAno()+"'  WHERE codigo = '"+livro.getCodigo()+"'";
+    public boolean alterar(Fornecedor fornecedor){
+        String sql = "UPDATE fornecedor SET nome = '"+fornecedor.getNome()+"',"
+                + "telefone = '"+fornecedor.getTelefone()+"', cep = '"+fornecedor.getCEP()+"',"
+                + "endereco = '"+fornecedor.getEndereco()+"', bairro = '"+fornecedor.getBairro()+"',"
+                + "municipio = '"+fornecedor.getMunicipio()+"', uf = '"+fornecedor.getUF()+"'WHERE cnpj = '"+fornecedor.getCNPJ()+"'";
         PreparedStatement stmt;
         try {
             stmt = conexao.conectarBanco().prepareStatement(sql);
@@ -109,13 +112,10 @@ public class ModelCadastro {
         }
         return false;
     }
+    
     //Excluir
-    public boolean excluir(Livro livro){
-        long codigo = 0;
-        
-        codigo = livro.getCodigo();
-        
-        String sql = "UPDATE livro SET status = 0 WHERE codigo = '"+codigo+"'";
+    public boolean excluir(Fornecedor fornecedor){
+        String sql = "UPDATE fornecedor SET status = 0 WHERE cnpj = '"+fornecedor.getCNPJ()+"'";
         PreparedStatement stmt;
         try {
             stmt = conexao.conectarBanco().prepareStatement(sql);
@@ -129,13 +129,10 @@ public class ModelCadastro {
         
         return false;
     }
+    
     //Restaurar
-    public boolean restaurar(Livro livro){
-        long codigo = 0;
-        
-        codigo = livro.getCodigo();
-        
-        String sql = "UPDATE livro SET status = 1 WHERE codigo = '"+codigo+"'";
+    public boolean restaurar(Fornecedor fornecedor){
+        String sql = "UPDATE fornecedor SET status = 1 WHERE cnpj = '"+fornecedor.getCNPJ()+"'";
         PreparedStatement stmt;
         try {
             stmt = conexao.conectarBanco().prepareStatement(sql);

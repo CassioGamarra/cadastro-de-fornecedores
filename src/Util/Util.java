@@ -1,8 +1,13 @@
 package Util;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -50,6 +55,29 @@ public class Util {
             for (i = 0; i < count; i++){
                 tblRemove.removeRow(0);
             }    
+        }
+    }
+    
+    
+    //Limpa os campos 
+    public static void limparCampos(Container dialog) {
+        Component components[] = dialog.getComponents();
+        for (Component component : components) {
+            if (component instanceof JFormattedTextField) {
+                JFormattedTextField field = (JFormattedTextField) component;
+                field.setValue(null);
+            }
+            else if (component instanceof JTextField) {
+                JTextField field = (JTextField) component;
+                field.setText("");
+            }
+            else if (component instanceof JTextArea) {
+                JTextArea area = (JTextArea) component;
+                area.setText("");
+            }
+            else if (component instanceof Container) {
+                limparCampos((Container) component);
+            }
         }
     }
 }

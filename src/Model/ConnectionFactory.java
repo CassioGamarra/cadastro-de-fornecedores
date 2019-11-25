@@ -9,8 +9,8 @@ import javax.swing.JOptionPane;
  * Singleton com as conexões do SGBD
  * @author cassio
  */
-public class Conexao {
-    private static Conexao instance;
+public class ConnectionFactory {
+    private static ConnectionFactory instance;
     private String url;
     private String IP;
     private String porta;
@@ -21,11 +21,11 @@ public class Conexao {
     //Implementar um status da conexão
     private boolean status;
     
-    private Conexao(){}
+    private ConnectionFactory(){}
     
-    public static Conexao getInstance(){
+    public static ConnectionFactory getInstance(){
         if(instance == null){
-            instance = new Conexao();
+            instance = new ConnectionFactory();
         }
         return instance;
     }

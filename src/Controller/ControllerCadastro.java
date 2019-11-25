@@ -1,7 +1,7 @@
 package Controller;
 
-import Model.Conexao;
-import Model.Livro;
+import Model.ConnectionFactory;
+import Model.Fornecedor;
 import Model.ModelCadastro;
 import Util.Util;
 import View.ViewPrincipal;
@@ -10,8 +10,12 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
 
 /**
  * Classe do controller de busca e exclusão da base de dados
@@ -21,35 +25,61 @@ public class ControllerCadastro {
     public ControllerCadastro(){}
     
     ModelCadastro cadastro = new ModelCadastro();
-    Conexao conexao = Conexao.getInstance();
+    ConnectionFactory conexao = ConnectionFactory.getInstance();
     Util util = new Util();
     
+    //Filtrar uma consulta na tabela
+    public void filtrarDados(ViewPrincipal view, String nomeTabela){
+        DefaultTableModel tabela;
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>();
+        String busca = "";
+        
+        if(nomeTabela.equals("ativos")){
+            tabela = (DefaultTableModel) view.getTabelaFornecedores().getModel();
+            sorter = new TableRowSorter<>(tabela);
+            view.getTabelaFornecedores().setRowSorter(sorter);
+            busca = view.getFieldBusca().getText().toUpperCase();
+        }
+        else if(nomeTabela.equals("inativos")){
+            tabela = (DefaultTableModel) view.getTabelaFornecedoresInativos().getModel();
+            sorter = new TableRowSorter<>(tabela);
+            view.getTabelaFornecedoresInativos().setRowSorter(sorter);
+            busca = view.getFieldBuscaInativos().getText().toUpperCase();
+        }
+        
+        if(busca.length() == 0){
+            sorter.setRowFilter(null);
+        }
+        else{
+            sorter.setRowFilter(RowFilter.regexFilter(busca, 1));
+        }
+        
+    }
+    
+    //Consultar todos os cadastrados ativos e inativos
     public void consultarTodos(ViewPrincipal view){ 
         if(conexao.getStatus()){
             ResultSet consulta = cadastro.consultarTodos();
         
-            DefaultTableModel tabelaLivros = (DefaultTableModel) view.getTabelaLivros().getModel();
-            DefaultTableModel tabelaLivrosExcluidos = (DefaultTableModel) view.getTabelaLivrosExcluidos().getModel();
+            DefaultTableModel tblFornecedores = (DefaultTableModel) view.getTabelaFornecedores().getModel();
+            DefaultTableModel tblFornecedoresInativos = (DefaultTableModel) view.getTabelaFornecedoresInativos().getModel();
 
-            String titulo, autor, genero;
-            long codigo;
-            int ano, status;
+            String cnpj, nome, telefone;
+            int status;
             
             try {
                 while(consulta.next()){
-                    codigo = consulta.getLong("codigo");
-                    titulo = consulta.getString("titulo");
-                    autor = consulta.getString("autor");
-                    genero = consulta.getString("genero");
-                    ano = consulta.getInt("ano");
+                    cnpj = consulta.getString("cnpj");
+                    nome = consulta.getString("nome");
+                    telefone = consulta.getString("telefone");
                     status = consulta.getInt("status");
                     if(status == 0){
-                        Object[] linha = {codigo, titulo, autor, genero, ano};
-                        tabelaLivrosExcluidos.addRow(linha);
+                        Object[] linha = {cnpj, nome, telefone};
+                        tblFornecedoresInativos.addRow(linha);
                     }
                     else{
-                        Object[] linha = {codigo, titulo, autor, genero, ano};
-                        tabelaLivros.addRow(linha);
+                        Object[] linha = {cnpj, nome, telefone};
+                        tblFornecedores.addRow(linha);
                     }
                 }
             } catch (SQLException ex) {
@@ -59,41 +89,52 @@ public class ControllerCadastro {
 
     }
     
-    //Cadastrar um livro
+    //Cadastrar um fornecedor
     public void cadastrar(ViewPrincipal view){
-        Livro livro = new Livro();
-        long codigo;
-        int ano;
-        String titulo, resumo, genero, autor;
+        Fornecedor fornecedor = new Fornecedor();
         
-        String codigoString = view.getFieldCodigoCadastro().getText();
-        String anoString = view.getFieldAnoCadastro().getText();
+        String cnpj, nome, telefone, cep, endereco, bairro, municipio, uf;
         
-        titulo = view.getFieldTituloCadastro().getText();
-        resumo = view.getTextResumoCadastro().getText();
-        genero = view.getFieldGeneroCadastro().getText();
-        autor = view.getFieldAutorCadastro().getText();
+        cnpj = view.getFieldCNPJCad().getText();
+        nome = view.getFieldNomeCad().getText();
+        telefone = view.getFieldTelefoneCad().getText();
+        cep = view.getFieldCEPCad().getText();
+        endereco = view.getFieldEnderecoCad().getText();
+        bairro = view.getFieldBairroCad().getText();
+        municipio = view.getFieldMunicipioCad().getText();
+        uf = view.getFieldUFCad().getText();
         
         
-        if((codigoString.equals(""))|| (titulo.equals("")) || (resumo.equals("")) || (genero.equals("")) || (autor.equals("")) || (anoString.equals(""))){
-            JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos!", "ERRO", JOptionPane.WARNING_MESSAGE);
+        if((cnpj.equals(""))|| (telefone.equals("")) || (cep.equals("")) || 
+                (endereco.equals("")) || (bairro.equals("")) || 
+                (municipio.equals("")) || (uf.equals(""))){
+            JOptionPane.showMessageDialog(null, 
+                    "Por favor, preencha todos os campos!", "ERRO", 
+                    JOptionPane.WARNING_MESSAGE);
         }
         else{
-            codigo = Long.parseLong(codigoString);
-            ano = Integer.parseInt(anoString);
-            livro.setCodigo(codigo);
-            livro.setTitulo(titulo);
-            livro.setResumo(resumo);
-            livro.setGenero(genero);
-            livro.setAutor(autor);
-            livro.setAno(ano);
-            int opcao = JOptionPane.showConfirmDialog(null, "Deseja cadastrar o livro:\n\n"+livro.getTitulo().toUpperCase(), "CADASTRAR", JOptionPane.YES_NO_OPTION);
+            fornecedor.setCNPJ(cnpj);
+            fornecedor.setNome(nome);
+            fornecedor.setTelefone(telefone);
+            fornecedor.setCEP(cep);
+            fornecedor.setEndereco(endereco);
+            fornecedor.setBairro(bairro);
+            fornecedor.setMunicipio(municipio);
+            fornecedor.setUF(uf);
+            
+            int opcao = JOptionPane.showConfirmDialog(null, 
+                    "Deseja cadastrar a empresa:\n\n"+
+                            fornecedor.getNome().toUpperCase(), "CADASTRAR", 
+                            JOptionPane.YES_NO_OPTION);
 
             if(opcao == 0){
-                if(cadastro.cadastrar(livro)){
-                    JOptionPane.showMessageDialog(null, "O livro\n\n"+livro.getTitulo().toUpperCase()+"\n\nfoi cadastrado com sucesso!");
-                    util.cleanJTable(view.getTabelaLivros());
-                    util.cleanJTable(view.getTabelaLivrosExcluidos());
+                if(cadastro.cadastrar(fornecedor)){
+                    JOptionPane.showMessageDialog(null, "O fornecedor\n\n"+
+                            fornecedor.getNome().toUpperCase()+
+                            "\n\nfoi cadastrado com sucesso!");
+                    util.cleanJTable(view.getTabelaFornecedores());
+                    util.cleanJTable(view.getTabelaFornecedoresInativos());
+                    util.limparCampos(view.getDialogCadastrar());
                     consultarTodos(view);
                 }
                 else{
@@ -109,79 +150,102 @@ public class ControllerCadastro {
             }
         }
     }
-    //Consultar um livro
+    
+    //Consultar um fornecedor
     public void consultar(ViewPrincipal view, String tipoConsulta){
-        Livro livro = new Livro();
-        int ano;
-        String titulo, resumo, autor, genero;
+        Fornecedor fornecedor  = new Fornecedor();
+        
+        String cnpj, nome, telefone, cep, endereco, bairro, municipio, uf;
 
-        int i = view.getTabelaLivros().getSelectedRow();
+        int i = view.getTabelaFornecedores().getSelectedRow();
         if(i == -1){
-            JOptionPane.showMessageDialog(null, "Nenhum livro selecionado!");
+            JOptionPane.showMessageDialog(null, "Nenhum fornecedor selecionado!");
             return;
         }
-        long codigo = Long.parseLong(view.getTabelaLivros().getValueAt(i, 0).toString());
-        livro = cadastro.consultar(codigo);
-        if(livro != null){
-            titulo = livro.getTitulo();
-            resumo = livro.getResumo();
-            autor = livro.getAutor();
-            genero = livro.getGenero();
-            ano = livro.getAno();
+        cnpj = view.getTabelaFornecedores().getValueAt(i, 0).toString();
+        
+        fornecedor = cadastro.consultar(cnpj);
+        if(fornecedor != null){
+            nome = fornecedor.getNome();
+            telefone = fornecedor.getTelefone();
+            cep = fornecedor.getCEP();
+            endereco = fornecedor.getEndereco();
+            bairro = fornecedor.getBairro();
+            municipio = fornecedor.getMunicipio();
+            uf = fornecedor.getUF();
             
             if(tipoConsulta.equals("informacoes")){
-                view.getFieldTituloInfo().setText(titulo);
-                view.getTextResumoInfo().setText(resumo);
-                view.getFieldAutorInfo().setText(autor);
-                view.getFieldGeneroInfo().setText(genero);
-                view.getFieldAnoInfo().setText(String.valueOf(ano));
+                view.getFieldCNPJInfo().setText(cnpj);
+                view.getFieldNomeInfo().setText(nome);
+                view.getFieldTelefoneInfo().setText(telefone);
+                view.getFieldCEPInfo().setText(cep);
+                view.getFieldEnderecoInfo().setText(endereco);
+                view.getFieldBairroInfo().setText(bairro);
+                view.getFieldMunicipioInfo().setText(municipio);
+                view.getFieldUFInfo().setText(uf);
                 view.getDialogInformacoes().setVisible(true);
             }
             if(tipoConsulta.equals("alterar")){
-                view.getFieldCodigoAlteracao().setText(String.valueOf(codigo));
-                view.getFieldTituloAlteracao().setText(titulo);
-                view.getTextResumoAlteracao().setText(resumo);
-                view.getFieldAutorAlteracao().setText(autor);
-                view.getFieldGeneroAlteracao().setText(genero);
-                view.getFieldAnoAlteracao().setText(String.valueOf(ano));
+                view.getFieldCNPJAlt().setText(cnpj);
+                view.getFieldNomeAlt().setText(nome);
+                view.getFieldTelefoneAlt().setText(telefone);
+                view.getFieldCEPAlt().setText(cep);
+                view.getFieldEnderecoAlt().setText(endereco);
+                view.getFieldBairroAlt().setText(bairro);
+                view.getFieldMunicipioAlt().setText(municipio);
+                view.getFieldUFAlt().setText(uf);
                 view.getDialogAlterar().setVisible(true);
             }
         }
+        
         else{
             JOptionPane.showMessageDialog(null, "NENHUM RESULTADO!");
         }
     }
-    //Alterar um livro
+    
+    //Alterar um fornecedor
     public void alterar(ViewPrincipal view){
-        Livro livro = new Livro();
+        Fornecedor fornecedor = new Fornecedor();
         
-        String titulo, resumo, genero, autor;
+        String cnpj, nome, telefone, cep, endereco, bairro, municipio, uf;
         
-        String anoString = view.getFieldAnoAlteracao().getText();
-        
-        titulo = view.getFieldTituloAlteracao().getText();
-        resumo = view.getTextResumoAlteracao().getText();
-        genero = view.getFieldGeneroAlteracao().getText();
-        autor = view.getFieldAutorAlteracao().getText();
-        
-        if((titulo.equals("")) || (resumo.equals("")) || (genero.equals("")) || (autor.equals("")) || (anoString.equals(""))){
-            JOptionPane.showMessageDialog(null, "Por favor, preencha todos os campos!", "ERRO", JOptionPane.WARNING_MESSAGE);
+        cnpj = view.getFieldCNPJAlt().getText();
+        nome = view.getFieldNomeAlt().getText();
+        telefone = view.getFieldTelefoneAlt().getText();
+        cep = view.getFieldCEPAlt().getText();
+        endereco = view.getFieldEnderecoAlt().getText();
+        bairro = view.getFieldBairroAlt().getText();
+        municipio = view.getFieldMunicipioAlt().getText();
+        uf = view.getFieldUFAlt().getText();
+
+        if((telefone.equals("")) || (cep.equals("")) || 
+                (endereco.equals("")) || (bairro.equals("")) || 
+                (municipio.equals("")) || (uf.equals(""))){
+            JOptionPane.showMessageDialog(null, 
+                    "Por favor, preencha todos os campos!", "ERRO", 
+                    JOptionPane.WARNING_MESSAGE);
         }
         else{
-            int opcao = JOptionPane.showConfirmDialog(null, "Deseja alterar o livro:\n\n"+titulo.toUpperCase(), "ALTERAR", JOptionPane.YES_NO_OPTION);
-            
-            livro.setCodigo(Long.parseLong(view.getFieldCodigoAlteracao().getText()));
-            livro.setTitulo(titulo);
-            livro.setResumo(resumo);
-            livro.setAutor(autor);
-            livro.setGenero(genero);
-            livro.setAno(Integer.parseInt(anoString));
+            int opcao = JOptionPane.showConfirmDialog(null, 
+                    "Deseja alterar a empresa:\n\n"+
+                            nome.toUpperCase(), "ALTERAR", 
+                            JOptionPane.YES_NO_OPTION);
+            fornecedor.setCNPJ(cnpj);
+            fornecedor.setNome(nome);
+            fornecedor.setTelefone(telefone);
+            fornecedor.setCEP(cep);
+            fornecedor.setEndereco(endereco);
+            fornecedor.setBairro(bairro);
+            fornecedor.setMunicipio(municipio);
+            fornecedor.setUF(uf);
             
             if(opcao == 0){
-                if(cadastro.alterar(livro)){
-                    JOptionPane.showMessageDialog(null, "O livro\n\n"+livro.getTitulo().toUpperCase()+"\n\nfoi alterado com sucesso!");
-                    util.cleanJTable(view.getTabelaLivros());
-                    util.cleanJTable(view.getTabelaLivrosExcluidos());
+                if(cadastro.alterar(fornecedor)){
+                    JOptionPane.showMessageDialog(null, "O fornecedor\n\n"+
+                            fornecedor.getNome().toUpperCase()+
+                            "\n\nfoi alterado com sucesso!");
+                    util.cleanJTable(view.getTabelaFornecedores());
+                    util.cleanJTable(view.getTabelaFornecedoresInativos());
                     view.getDialogAlterar().dispose();
                     consultarTodos(view);
                 }
@@ -198,27 +262,33 @@ public class ControllerCadastro {
             }
         }
     }
-    //Excluir um livro
+    
+    //Excluir um fornecedor
     public void excluir(ViewPrincipal view){
-        Livro livro = new Livro();
+        Fornecedor fornecedor = new Fornecedor();
         
-        int i = view.getTabelaLivros().getSelectedRow();
+        int i = view.getTabelaFornecedores().getSelectedRow();
         
         if(i == -1){
-            JOptionPane.showMessageDialog(null, "Nenhum livro selecionado!");
+            JOptionPane.showMessageDialog(null, "Nenhum fornecedor selecionado!");
             return;
         }
         
-        livro.setCodigo(Long.parseLong(view.getTabelaLivros().getValueAt(i, 0).toString()));
-        livro.setTitulo(view.getTabelaLivros().getValueAt(i, 1).toString());
+        fornecedor.setCNPJ(view.getTabelaFornecedores().getValueAt(i, 0).toString());
+        fornecedor.setNome(view.getTabelaFornecedores().getValueAt(i, 1).toString());
                
-        int opcao = JOptionPane.showConfirmDialog(null, "Deseja excluir o livro:\n\n"+livro.getTitulo().toUpperCase(), "EXCLUIR", JOptionPane.YES_NO_OPTION);
+        int opcao = JOptionPane.showConfirmDialog(null,
+                "Deseja excluir o fornecedor:\n\n"+
+                        fornecedor.getNome().toUpperCase(), "EXCLUIR", 
+                        JOptionPane.YES_NO_OPTION);
 
         if(opcao == 0){
-            if(cadastro.excluir(livro)){
-                JOptionPane.showMessageDialog(null, "O livro\n\n"+livro.getTitulo().toUpperCase()+"\n\nfoi excluido com sucesso!");
-                util.cleanJTable(view.getTabelaLivros());
-                util.cleanJTable(view.getTabelaLivrosExcluidos());
+            if(cadastro.excluir(fornecedor)){
+                JOptionPane.showMessageDialog(null, "O fornecedor\n\n"+
+                            fornecedor.getNome().toUpperCase()+
+                            "\n\nfoi excluido com sucesso!");
+                    util.cleanJTable(view.getTabelaFornecedores());
+                    util.cleanJTable(view.getTabelaFornecedoresInativos());
                 consultarTodos(view);
             }
             else{
@@ -233,27 +303,32 @@ public class ControllerCadastro {
             return;
         }
     }
-    //Restaurar um livro
+    
+    //Restaurar um fornecedor
     public void restaurar(ViewPrincipal view){
-        Livro livro = new Livro();
+        Fornecedor fornecedor = new Fornecedor();
         
-        int i = view.getTabelaLivrosExcluidos().getSelectedRow();
+        int i = view.getTabelaFornecedoresInativos().getSelectedRow();
         
         if(i == -1){
-            JOptionPane.showMessageDialog(null, "Nenhum livro selecionado!");
+            JOptionPane.showMessageDialog(null, "Nenhum fornecedor selecionado!");
             return;
         }
+
+        fornecedor.setCNPJ(view.getTabelaFornecedoresInativos().getValueAt(i, 0).toString());
+        fornecedor.setNome(view.getTabelaFornecedoresInativos().getValueAt(i, 1).toString());
         
-        livro.setCodigo(Long.parseLong(view.getTabelaLivrosExcluidos().getValueAt(i, 0).toString()));
-        livro.setTitulo(view.getTabelaLivrosExcluidos().getValueAt(i, 1).toString());
-        
-        int opcao = JOptionPane.showConfirmDialog(null, "Deseja restaurar o livro:\n\n"+livro.getTitulo().toUpperCase(), "RESTAURAR", JOptionPane.YES_NO_OPTION);
-        System.out.println(opcao);
+        int opcao = JOptionPane.showConfirmDialog(null, 
+                "Deseja restaurar o fornecedor:\n\n"+
+                        fornecedor.getNome().toUpperCase(), "RESTAURAR", 
+                        JOptionPane.YES_NO_OPTION);
         if(opcao == 0){
-            if(cadastro.restaurar(livro)){
-                JOptionPane.showMessageDialog(null, "O livro\n\n"+livro.getTitulo().toUpperCase()+"\n\nfoi restaurado com sucesso!");
-                util.cleanJTable(view.getTabelaLivros());
-                util.cleanJTable(view.getTabelaLivrosExcluidos());
+            if(cadastro.restaurar(fornecedor)){
+                JOptionPane.showMessageDialog(null, "O fornecedor\n\n"+
+                            fornecedor.getNome().toUpperCase()+
+                            "\n\nfoi restaurado com sucesso!");
+                    util.cleanJTable(view.getTabelaFornecedores());
+                    util.cleanJTable(view.getTabelaFornecedoresInativos());
                 consultarTodos(view);
             }
             else{

@@ -1,7 +1,7 @@
 package Controller;
 
 import View.ViewPrincipal;
-import Model.Conexao;
+import Model.ConnectionFactory;
 import Util.*;
 
 //Importações para manipular o arquivo
@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class ControllerConexao {
     public ControllerConexao(){}
-    Conexao conexao = Conexao.getInstance();
+    ConnectionFactory conexao = ConnectionFactory.getInstance();
     
     public static boolean statusConexao;
     
@@ -96,8 +96,8 @@ public class ControllerConexao {
                 verificaDadosConexao(view);
                 //Tenta conectar com o banco
                 Util util = new Util();
-                util.cleanJTable(view.getTabelaLivros());
-                util.cleanJTable(view.getTabelaLivrosExcluidos());
+                util.cleanJTable(view.getTabelaFornecedores());
+                util.cleanJTable(view.getTabelaFornecedoresInativos());
                 
                 conectar(view);
                 view.cadastro.consultarTodos(view);

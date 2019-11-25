@@ -7,7 +7,7 @@ package View;
 
 import Controller.ControllerCadastro;
 import Controller.ControllerConexao;
-import Controller.ControllerEANReader;
+import Controller.ControllerJson;
 import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -16,8 +16,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
-import java.util.logging.Logger;;
-import javax.swing.JTextArea;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -27,10 +26,9 @@ import javax.swing.JTextField;
  *
  * @author cassio
  */
-public class ViewPrincipal extends javax.swing.JFrame {
+public class ViewPrincipal extends javax.swing.JFrame{
     //Formatando a hora no sistema
     private static final DateFormat FORMATO = new SimpleDateFormat("HH:mm:ss");
-    private String apiToken;
     /**
      * Creates new form ViewPrincipal
      */
@@ -44,7 +42,6 @@ public class ViewPrincipal extends javax.swing.JFrame {
         Thread clockThread = new Thread(new ViewPrincipal.ClockRunnable(), "Clock thread");
         clockThread.setDaemon(true);
         clockThread.start();
-        
     }
     
     //Hora do sistema
@@ -56,7 +53,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
     public void setHora(Date date) {
         lblHora.setText(FORMATO.format(date));
     }
-    
+
     /**
      * Runnable que contém o código que atuará na thread. Chamando o método setHora
      */
@@ -83,7 +80,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
             }
         }
     }
-    
+
     //Controller da Conexão
     public ControllerConexao conexao = new ControllerConexao();
     //Controler para buscar a lista de jogos
@@ -114,109 +111,142 @@ public class ViewPrincipal extends javax.swing.JFrame {
         return fieldPorta;
     }
     
-    //Getter do token da api de busca
-
-    public void setApiToken(String apiToken) {
-        this.apiToken = apiToken;
-    }
-
-    public String getApiToken() {
-        return apiToken;
-    }
-    
     //Getters gerais da view
     
-    public JTextField getFieldCodigoAlteracao() {
-        return fieldCodigoAlteracao;
+    public JTextField getFieldBuscaInativos() {
+        return fieldBuscaInativos;
+    }
+
+    public JTextField getFieldBusca() {
+        return fieldBusca;
     }
 
     public JDialog getDialogAlterar() {
         return dialogAlterar;
+    }
+    
+    public JDialog getDialogCadastrar() {
+        return dialogCadastrar;
     }
 
     public JDialog getDialogInformacoes() {
         return dialogInformacoes;
     }
 
-    public JTextField getFieldCodigoCadastro() {
-        return fieldCodigoCadastro;
+    public JDialog getDialogRestaurar() {
+        return dialogRestaurar;
     }
 
-    public JTextField getFieldAnoAlteracao() {
-        return fieldAnoAlteracao;
+    public JTextField getFieldBairroAlt() {
+        return fieldBairroAlt;
     }
 
-    public JTextField getFieldAnoCadastro() {
-        return fieldAnoCadastro;
+    public JTextField getFieldBairroCad() {
+        return fieldBairroCad;
     }
 
-    public JTextField getFieldAnoInfo() {
-        return fieldAnoInfo;
+    public JTextField getFieldBairroInfo() {
+        return fieldBairroInfo;
     }
 
-    public JTextField getFieldAutorAlteracao() {
-        return fieldAutorAlteracao;
+    public JTextField getFieldCEPAlt() {
+        return fieldCEPAlt;
     }
 
-    public JTextField getFieldAutorCadastro() {
-        return fieldAutorCadastro;
+    public JTextField getFieldCEPCad() {
+        return fieldCEPCad;
     }
 
-    public JTextField getFieldAutorInfo() {
-        return fieldAutorInfo;
+    public JTextField getFieldCEPInfo() {
+        return fieldCEPInfo;
     }
 
-    public JTextField getFieldGeneroAlteracao() {
-        return fieldGeneroAlteracao;
+    public JTextField getFieldCNPJAlt() {
+        return fieldCNPJAlt;
     }
 
-    public JTextField getFieldGeneroCadastro() {
-        return fieldGeneroCadastro;
+    public JTextField getFieldCNPJCad() {
+        return fieldCNPJCad;
     }
 
-    public JTextField getFieldGeneroInfo() {
-        return fieldGeneroInfo;
+    public JTextField getFieldCNPJInfo() {
+        return fieldCNPJInfo;
     }
 
-    public JTextField getFieldTituloAlteracao() {
-        return fieldTituloAlteracao;
+    public JTextField getFieldEnderecoAlt() {
+        return fieldEnderecoAlt;
     }
 
-    public JTextField getFieldTituloCadastro() {
-        return fieldTituloCadastro;
+    public JTextField getFieldEnderecoCad() {
+        return fieldEnderecoCad;
     }
 
-    public JTextField getFieldTituloInfo() {
-        return fieldTituloInfo;
+    public JTextField getFieldEnderecoInfo() {
+        return fieldEnderecoInfo;
     }
 
-    public JTable getTabelaLivros() {
-        return tabelaLivros;
+    public JTextField getFieldMunicipioAlt() {
+        return fieldMunicipioAlt;
     }
 
-    public JTable getTabelaLivrosExcluidos() {
-        return tabelaLivrosExcluidos;
+    public JTextField getFieldMunicipioCad() {
+        return fieldMunicipioCad;
     }
 
-    public JTextArea getTextResumoAlteracao() {
-        return textResumoAlteracao;
+    public JTextField getFieldMunicipioInfo() {
+        return fieldMunicipioInfo;
     }
 
-    public JTextArea getTextResumoCadastro() {
-        return textResumoCadastro;
+    public JTextField getFieldNomeAlt() {
+        return fieldNomeAlt;
     }
 
-    public JTextArea getTextResumoInfo() {
-        return textResumoInfo;
+    public JTextField getFieldNomeCad() {
+        return fieldNomeCad;
+    }
+
+    public JTextField getFieldNomeInfo() {
+        return fieldNomeInfo;
+    }
+
+    public JTextField getFieldTelefoneAlt() {
+        return fieldTelefoneAlt;
+    }
+
+    public JTextField getFieldTelefoneCad() {
+        return fieldTelefoneCad;
+    }
+
+    public JTextField getFieldTelefoneInfo() {
+        return fieldTelefoneInfo;
+    }
+
+    public JTextField getFieldUFAlt() {
+        return fieldUFAlt;
+    }
+
+    public JTextField getFieldUFCad() {
+        return fieldUFCad;
+    }
+
+    public JTextField getFieldUFInfo() {
+        return fieldUFInfo;
+    }
+
+    public JTable getTabelaFornecedores() {
+        return tabelaFornecedores;
     }
     
-    
-    
+    public JTable getTabelaFornecedoresInativos() {    
+        return tabelaFornecedoresInativos;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     @SuppressWarnings(value = "unchecked")
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -227,9 +257,10 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        btnRestaurarJogo = new javax.swing.JButton();
+        btnRestaurarFornecedor = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tabelaLivrosExcluidos = new javax.swing.JTable();
+        tabelaFornecedoresInativos = new javax.swing.JTable();
+        fieldBuscaInativos = new javax.swing.JTextField();
         dialogConexao = new javax.swing.JDialog();
         panelConexao = new javax.swing.JPanel();
         fieldIP = new javax.swing.JTextField();
@@ -242,42 +273,46 @@ public class ViewPrincipal extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         dialogCadastrar = new javax.swing.JDialog();
         panelCadastro = new javax.swing.JPanel();
-        fieldGeneroCadastro = new javax.swing.JTextField();
-        fieldAnoCadastro = new javax.swing.JTextField();
-        fieldTituloCadastro = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        fieldAutorCadastro = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        textResumoCadastro = new javax.swing.JTextArea();
-        fieldCodigoCadastro = new javax.swing.JTextField();
+        fieldCNPJCad = new javax.swing.JTextField();
+        fieldNomeCad = new javax.swing.JTextField();
+        fieldTelefoneCad = new javax.swing.JTextField();
+        fieldCEPCad = new javax.swing.JTextField();
+        fieldEnderecoCad = new javax.swing.JTextField();
+        fieldBairroCad = new javax.swing.JTextField();
+        fieldMunicipioCad = new javax.swing.JTextField();
+        fieldUFCad = new javax.swing.JTextField();
         dialogAlterar = new javax.swing.JDialog();
-        panelAlterar = new javax.swing.JPanel();
-        fieldGeneroAlteracao = new javax.swing.JTextField();
-        fieldAnoAlteracao = new javax.swing.JTextField();
-        fieldTituloAlteracao = new javax.swing.JTextField();
+        panelCadastro3 = new javax.swing.JPanel();
         btnAlterar = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        fieldAutorAlteracao = new javax.swing.JTextField();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        textResumoAlteracao = new javax.swing.JTextArea();
-        fieldCodigoAlteracao = new javax.swing.JTextField();
-        dialogInformacoes = new javax.swing.JDialog();
-        panelInformacoes = new javax.swing.JPanel();
-        fieldGeneroInfo = new javax.swing.JTextField();
-        fieldAnoInfo = new javax.swing.JTextField();
-        fieldTituloInfo = new javax.swing.JTextField();
-        btnOkInfo = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        fieldAutorInfo = new javax.swing.JTextField();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        textResumoInfo = new javax.swing.JTextArea();
-        jPanel1 = new javax.swing.JPanel();
+        fieldCNPJAlt = new javax.swing.JTextField();
+        fieldNomeAlt = new javax.swing.JTextField();
+        fieldTelefoneAlt = new javax.swing.JTextField();
+        fieldCEPAlt = new javax.swing.JTextField();
+        fieldEnderecoAlt = new javax.swing.JTextField();
+        fieldBairroAlt = new javax.swing.JTextField();
+        fieldMunicipioAlt = new javax.swing.JTextField();
+        fieldUFAlt = new javax.swing.JTextField();
+        dialogInformacoes = new javax.swing.JDialog();
+        panelCadastro2 = new javax.swing.JPanel();
+        btnOkInfo = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        fieldCNPJInfo = new javax.swing.JTextField();
+        fieldNomeInfo = new javax.swing.JTextField();
+        fieldTelefoneInfo = new javax.swing.JTextField();
+        fieldCEPInfo = new javax.swing.JTextField();
+        fieldEnderecoInfo = new javax.swing.JTextField();
+        fieldBairroInfo = new javax.swing.JTextField();
+        fieldMunicipioInfo = new javax.swing.JTextField();
+        fieldUFInfo = new javax.swing.JTextField();
+        panelPrincipal = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabelaLivros = new javax.swing.JTable();
+        tabelaFornecedores = new javax.swing.JTable();
         btnRestaurar = new javax.swing.JButton();
         logo = new javax.swing.JLabel();
         lblHora = new javax.swing.JLabel();
@@ -286,27 +321,28 @@ public class ViewPrincipal extends javax.swing.JFrame {
         btnCadastro = new javax.swing.JButton();
         btnAltera = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        btnHide = new javax.swing.JButton();
+        fieldBusca = new javax.swing.JTextField();
 
         dialogRestaurar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        dialogRestaurar.setTitle("RESTAURAR LIVROS");
+        dialogRestaurar.setTitle("RESTAURAR FORNECEDOR");
         dialogRestaurar.setBackground(new java.awt.Color(255, 255, 255));
-        dialogRestaurar.setMinimumSize(new java.awt.Dimension(640, 640));
+        dialogRestaurar.setFocusable(false);
+        dialogRestaurar.setMinimumSize(new java.awt.Dimension(640, 620));
         dialogRestaurar.setResizable(false);
 
         panelRestaurar.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo_1.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(133, 108, 76));
+        jLabel2.setForeground(new java.awt.Color(51, 59, 69));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("RESTAURAR LIVROS");
+        jLabel2.setText("FORNECEDORES INATIVOS");
 
-        jButton1.setBackground(new java.awt.Color(133, 108, 76));
+        jButton1.setBackground(new java.awt.Color(51, 59, 69));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("VOLTAR");
@@ -316,31 +352,31 @@ public class ViewPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnRestaurarJogo.setBackground(new java.awt.Color(133, 108, 76));
-        btnRestaurarJogo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnRestaurarJogo.setForeground(new java.awt.Color(255, 255, 255));
-        btnRestaurarJogo.setText("RESTAURAR");
-        btnRestaurarJogo.addActionListener(new java.awt.event.ActionListener() {
+        btnRestaurarFornecedor.setBackground(new java.awt.Color(51, 59, 69));
+        btnRestaurarFornecedor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRestaurarFornecedor.setForeground(new java.awt.Color(255, 255, 255));
+        btnRestaurarFornecedor.setText("RESTAURAR");
+        btnRestaurarFornecedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRestaurarJogoActionPerformed(evt);
+                btnRestaurarFornecedorActionPerformed(evt);
             }
         });
 
-        tabelaLivrosExcluidos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        tabelaLivrosExcluidos.setForeground(new java.awt.Color(133, 108, 76));
-        tabelaLivrosExcluidos.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaFornecedoresInativos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tabelaFornecedoresInativos.setForeground(new java.awt.Color(51, 59, 69));
+        tabelaFornecedoresInativos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "CÓDIGO", "TÍTULO", "GÊNERO", "AUTOR", "ANO"
+                "CNPJ", "NOME", "TELEFONE"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -351,21 +387,30 @@ public class ViewPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaLivrosExcluidos.setGridColor(new java.awt.Color(133, 108, 76));
-        tabelaLivrosExcluidos.setRowHeight(20);
-        tabelaLivrosExcluidos.setSelectionBackground(new java.awt.Color(133, 108, 76));
-        tabelaLivrosExcluidos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tabelaLivrosExcluidos.getTableHeader().setReorderingAllowed(false);
-        jScrollPane3.setViewportView(tabelaLivrosExcluidos);
-        if (tabelaLivrosExcluidos.getColumnModel().getColumnCount() > 0) {
-            tabelaLivrosExcluidos.getColumnModel().getColumn(0).setResizable(false);
-            tabelaLivrosExcluidos.getColumnModel().getColumn(0).setPreferredWidth(1);
-            tabelaLivrosExcluidos.getColumnModel().getColumn(1).setResizable(false);
-            tabelaLivrosExcluidos.getColumnModel().getColumn(2).setResizable(false);
-            tabelaLivrosExcluidos.getColumnModel().getColumn(3).setResizable(false);
-            tabelaLivrosExcluidos.getColumnModel().getColumn(4).setResizable(false);
+        tabelaFornecedoresInativos.setColumnSelectionAllowed(true);
+        tabelaFornecedoresInativos.setGridColor(new java.awt.Color(51, 59, 69));
+        tabelaFornecedoresInativos.setRowHeight(20);
+        tabelaFornecedoresInativos.setSelectionBackground(new java.awt.Color(51, 59, 69));
+        tabelaFornecedoresInativos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaFornecedoresInativos.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(tabelaFornecedoresInativos);
+        tabelaFornecedoresInativos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tabelaFornecedoresInativos.getColumnModel().getColumnCount() > 0) {
+            tabelaFornecedoresInativos.getColumnModel().getColumn(0).setResizable(false);
+            tabelaFornecedoresInativos.getColumnModel().getColumn(0).setPreferredWidth(1);
+            tabelaFornecedoresInativos.getColumnModel().getColumn(1).setResizable(false);
+            tabelaFornecedoresInativos.getColumnModel().getColumn(2).setResizable(false);
         }
-        tabelaLivrosExcluidos.setSelectionForeground(new java.awt.Color(255,255,255));
+        tabelaFornecedoresInativos.setSelectionForeground(new java.awt.Color(255,255,255));
+
+        fieldBuscaInativos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldBuscaInativos.setForeground(new java.awt.Color(51, 59, 69));
+        fieldBuscaInativos.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 1, true), "Buscar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(51, 59, 69))); // NOI18N
+        fieldBuscaInativos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                fieldBuscaInativosKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRestaurarLayout = new javax.swing.GroupLayout(panelRestaurar);
         panelRestaurar.setLayout(panelRestaurarLayout);
@@ -375,32 +420,36 @@ public class ViewPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelRestaurarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRestaurarLayout.createSequentialGroup()
                         .addGap(0, 125, Short.MAX_VALUE)
-                        .addComponent(btnRestaurarJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnRestaurarFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(113, 113, 113))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fieldBuscaInativos))
                 .addContainerGap())
         );
 
-        panelRestaurarLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnRestaurarJogo, jButton1});
+        panelRestaurarLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnRestaurarFornecedor, jButton1});
 
         panelRestaurarLayout.setVerticalGroup(
             panelRestaurarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRestaurarLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(fieldBuscaInativos, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
                 .addGroup(panelRestaurarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRestaurarJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(91, Short.MAX_VALUE))
+                    .addComponent(btnRestaurarFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dialogRestaurarLayout = new javax.swing.GroupLayout(dialogRestaurar.getContentPane());
@@ -420,6 +469,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
         dialogConexao.setTitle("CONFIGURAR CONEXÃO");
         dialogConexao.setAlwaysOnTop(true);
         dialogConexao.setBackground(new java.awt.Color(255, 255, 255));
+        dialogConexao.setFocusable(false);
         dialogConexao.setMinimumSize(new java.awt.Dimension(480, 570));
         dialogConexao.setResizable(false);
         dialogConexao.setLocationRelativeTo(null);
@@ -427,17 +477,12 @@ public class ViewPrincipal extends javax.swing.JFrame {
         panelConexao.setBackground(new java.awt.Color(255, 255, 255));
 
         fieldIP.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldIP.setForeground(new java.awt.Color(83, 65, 43));
-        fieldIP.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "IP *", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-        fieldIP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldIPActionPerformed(evt);
-            }
-        });
+        fieldIP.setForeground(new java.awt.Color(51, 59, 69));
+        fieldIP.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "IP *", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
 
         fieldPorta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldPorta.setForeground(new java.awt.Color(83, 65, 43));
-        fieldPorta.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "PORTA *", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
+        fieldPorta.setForeground(new java.awt.Color(51, 59, 69));
+        fieldPorta.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "PORTA *", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
         fieldPorta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fieldPortaActionPerformed(evt);
@@ -445,17 +490,17 @@ public class ViewPrincipal extends javax.swing.JFrame {
         });
 
         fieldNomeDB.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldNomeDB.setForeground(new java.awt.Color(83, 65, 43));
-        fieldNomeDB.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "NOME DA BASE DE DADOS *", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
+        fieldNomeDB.setForeground(new java.awt.Color(51, 59, 69));
+        fieldNomeDB.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "NOME DA BASE DE DADOS *", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
 
         fieldUser.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldUser.setForeground(new java.awt.Color(83, 65, 43));
-        fieldUser.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "USUÁRIO *", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
+        fieldUser.setForeground(new java.awt.Color(51, 59, 69));
+        fieldUser.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "USUÁRIO *", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
 
         fieldPassword.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldPassword.setForeground(new java.awt.Color(83, 65, 43));
+        fieldPassword.setForeground(new java.awt.Color(51, 59, 69));
         fieldPassword.setText("jPasswordField1");
-        fieldPassword.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "SENHA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
+        fieldPassword.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "SENHA", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
         fieldPassword.setCaretColor(new java.awt.Color(255, 255, 255));
         fieldPassword.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -463,7 +508,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnConectar.setBackground(new java.awt.Color(133, 108, 76));
+        btnConectar.setBackground(new java.awt.Color(51, 59, 69));
         btnConectar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnConectar.setForeground(new java.awt.Color(255, 255, 255));
         btnConectar.setText("OK");
@@ -477,10 +522,10 @@ public class ViewPrincipal extends javax.swing.JFrame {
         });
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo_1.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/LOGO_1.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(133, 108, 76));
+        jLabel4.setForeground(new java.awt.Color(51, 59, 69));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("CONFIGURAR CONEXÃO COM A BASE DE DADOS");
 
@@ -549,43 +594,25 @@ public class ViewPrincipal extends javax.swing.JFrame {
         );
 
         dialogCadastrar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        dialogCadastrar.setTitle("CADASTRAR LIVRO");
+        dialogCadastrar.setTitle("CADASTRAR FORNECEDOR");
         dialogCadastrar.setBackground(new java.awt.Color(255, 255, 255));
-        dialogCadastrar.setMaximumSize(new java.awt.Dimension(480, 700));
-        dialogCadastrar.setMinimumSize(new java.awt.Dimension(480, 700));
-        dialogCadastrar.setPreferredSize(new java.awt.Dimension(480, 700));
+        dialogCadastrar.setFocusable(false);
+        dialogCadastrar.setMinimumSize(new java.awt.Dimension(480, 780));
         dialogCadastrar.setResizable(false);
         dialogCadastrar.setLocationRelativeTo(null);
+        dialogCadastrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                dialogCadastrarKeyPressed(evt);
+            }
+        });
 
         panelCadastro.setBackground(new java.awt.Color(255, 255, 255));
 
-        fieldGeneroCadastro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldGeneroCadastro.setForeground(new java.awt.Color(83, 65, 43));
-        fieldGeneroCadastro.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "GÊNERO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-        fieldGeneroCadastro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldGeneroCadastroActionPerformed(evt);
-            }
-        });
-
-        fieldAnoCadastro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldAnoCadastro.setForeground(new java.awt.Color(83, 65, 43));
-        fieldAnoCadastro.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "ANO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-        fieldAnoCadastro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldAnoCadastroActionPerformed(evt);
-            }
-        });
-
-        fieldTituloCadastro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldTituloCadastro.setForeground(new java.awt.Color(83, 65, 43));
-        fieldTituloCadastro.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "TÍTULO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-
-        btnCadastrar.setBackground(new java.awt.Color(133, 108, 76));
+        btnCadastrar.setBackground(new java.awt.Color(51, 59, 69));
         btnCadastrar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnCadastrar.setForeground(new java.awt.Color(255, 255, 255));
         btnCadastrar.setText("CADASTRAR");
-        btnCadastrar.setToolTipText("Botão para Conectar com o banco");
+        btnCadastrar.setToolTipText("");
         btnCadastrar.setBorderPainted(false);
         btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -595,99 +622,102 @@ public class ViewPrincipal extends javax.swing.JFrame {
         });
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo_1.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(83, 65, 43));
+        jLabel6.setForeground(new java.awt.Color(51, 59, 69));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("CADASTRAR LIVRO");
+        jLabel6.setText("CADASTRAR FORNECEDOR");
 
-        fieldAutorCadastro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldAutorCadastro.setForeground(new java.awt.Color(83, 65, 43));
-        fieldAutorCadastro.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "AUTOR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-
-        textResumoCadastro.setColumns(20);
-        textResumoCadastro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        textResumoCadastro.setForeground(new java.awt.Color(83, 65, 43));
-        textResumoCadastro.setLineWrap(true);
-        textResumoCadastro.setRows(5);
-        textResumoCadastro.setWrapStyleWord(true);
-        textResumoCadastro.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "RESUMO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(83, 65, 43))); // NOI18N
-        jScrollPane2.setViewportView(textResumoCadastro);
-
-        fieldCodigoCadastro.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldCodigoCadastro.setForeground(new java.awt.Color(83, 65, 43));
-        fieldCodigoCadastro.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "CÓDIGO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-        fieldCodigoCadastro.addKeyListener(new java.awt.event.KeyAdapter() {
+        fieldCNPJCad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldCNPJCad.setForeground(new java.awt.Color(51, 59, 69));
+        fieldCNPJCad.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "CNPJ - PRESSIONE ENTER P/ BUSCAR OS DADOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+        fieldCNPJCad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                fieldCodigoCadastroKeyPressed(evt);
+                fieldCNPJCadKeyPressed(evt);
             }
         });
+
+        fieldNomeCad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldNomeCad.setForeground(new java.awt.Color(51, 59, 69));
+        fieldNomeCad.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "NOME", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldTelefoneCad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldTelefoneCad.setForeground(new java.awt.Color(51, 59, 69));
+        fieldTelefoneCad.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "TELEFONE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldCEPCad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldCEPCad.setForeground(new java.awt.Color(51, 59, 69));
+        fieldCEPCad.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "CEP", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldEnderecoCad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldEnderecoCad.setForeground(new java.awt.Color(51, 59, 69));
+        fieldEnderecoCad.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "ENDEREÇO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldBairroCad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldBairroCad.setForeground(new java.awt.Color(51, 59, 69));
+        fieldBairroCad.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "BAIRRO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldMunicipioCad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldMunicipioCad.setForeground(new java.awt.Color(51, 59, 69));
+        fieldMunicipioCad.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "MUNICÍPIO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldUFCad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldUFCad.setForeground(new java.awt.Color(51, 59, 69));
+        fieldUFCad.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "ESTADO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
 
         javax.swing.GroupLayout panelCadastroLayout = new javax.swing.GroupLayout(panelCadastro);
         panelCadastro.setLayout(panelCadastroLayout);
         panelCadastroLayout.setHorizontalGroup(
             panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCadastroLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(fieldGeneroCadastro)
-                .addGap(187, 187, 187))
-            .addGroup(panelCadastroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(panelCadastroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCadastroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fieldTituloCadastro)
-                .addContainerGap())
-            .addGroup(panelCadastroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fieldAutorCadastro)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCadastroLayout.createSequentialGroup()
-                .addContainerGap(136, Short.MAX_VALUE)
                 .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCadastroLayout.createSequentialGroup()
-                        .addComponent(fieldAnoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCadastroLayout.createSequentialGroup()
-                        .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(124, 124, 124))))
-            .addGroup(panelCadastroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
-            .addGroup(panelCadastroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fieldCodigoCadastro)
+                    .addGroup(panelCadastroLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(fieldCNPJCad)
+                            .addComponent(fieldCEPCad)
+                            .addComponent(fieldEnderecoCad)
+                            .addComponent(fieldBairroCad)
+                            .addGroup(panelCadastroLayout.createSequentialGroup()
+                                .addComponent(fieldMunicipioCad)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fieldUFCad, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fieldNomeCad)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fieldTelefoneCad)
+                            .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelCadastroLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelCadastroLayout.setVerticalGroup(
             panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelCadastroLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(fieldCodigoCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldTituloCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fieldCNPJCad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldAutorCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fieldGeneroCadastro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldAnoCadastro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fieldNomeCad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldTelefoneCad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldCEPCad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldEnderecoCad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldBairroCad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelCadastroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldMunicipioCad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldUFCad, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(390, 390, 390))
         );
 
         javax.swing.GroupLayout dialogCadastrarLayout = new javax.swing.GroupLayout(dialogCadastrar.getContentPane());
@@ -698,37 +728,24 @@ public class ViewPrincipal extends javax.swing.JFrame {
         );
         dialogCadastrarLayout.setVerticalGroup(
             dialogCadastrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelCadastro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         dialogAlterar.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        dialogAlterar.setTitle("ALTERAR LIVRO");
+        dialogAlterar.setTitle("ALTERAR FORNECEDOR");
         dialogAlterar.setBackground(new java.awt.Color(255, 255, 255));
-        dialogAlterar.setMaximumSize(new java.awt.Dimension(480, 700));
-        dialogAlterar.setMinimumSize(new java.awt.Dimension(480, 700));
-        dialogAlterar.setPreferredSize(new java.awt.Dimension(480, 700));
+        dialogAlterar.setFocusable(false);
+        dialogAlterar.setMinimumSize(new java.awt.Dimension(480, 780));
         dialogAlterar.setResizable(false);
         dialogAlterar.setLocationRelativeTo(null);
 
-        panelAlterar.setBackground(new java.awt.Color(255, 255, 255));
+        panelCadastro3.setBackground(new java.awt.Color(255, 255, 255));
 
-        fieldGeneroAlteracao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldGeneroAlteracao.setForeground(new java.awt.Color(83, 65, 43));
-        fieldGeneroAlteracao.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "GÊNERO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-
-        fieldAnoAlteracao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldAnoAlteracao.setForeground(new java.awt.Color(83, 65, 43));
-        fieldAnoAlteracao.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "ANO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-
-        fieldTituloAlteracao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldTituloAlteracao.setForeground(new java.awt.Color(83, 65, 43));
-        fieldTituloAlteracao.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "TÍTULO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-
-        btnAlterar.setBackground(new java.awt.Color(133, 108, 76));
+        btnAlterar.setBackground(new java.awt.Color(51, 59, 69));
         btnAlterar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnAlterar.setForeground(new java.awt.Color(255, 255, 255));
         btnAlterar.setText("ALTERAR");
-        btnAlterar.setToolTipText("Botão para Conectar com o banco");
+        btnAlterar.setToolTipText("");
         btnAlterar.setBorderPainted(false);
         btnAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -737,158 +754,126 @@ public class ViewPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo_1.png"))); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(83, 65, 43));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("ALTERAR LIVRO");
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(83, 65, 43));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("CADASTRAR FORNECEDOR");
 
-        fieldAutorAlteracao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldAutorAlteracao.setForeground(new java.awt.Color(83, 65, 43));
-        fieldAutorAlteracao.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "AUTOR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
+        fieldCNPJAlt.setEditable(false);
+        fieldCNPJAlt.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldCNPJAlt.setForeground(new java.awt.Color(51, 59, 69));
+        fieldCNPJAlt.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "CNPJ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
 
-        textResumoAlteracao.setColumns(20);
-        textResumoAlteracao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        textResumoAlteracao.setForeground(new java.awt.Color(83, 65, 43));
-        textResumoAlteracao.setLineWrap(true);
-        textResumoAlteracao.setRows(5);
-        textResumoAlteracao.setWrapStyleWord(true);
-        textResumoAlteracao.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "RESUMO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(83, 65, 43))); // NOI18N
-        jScrollPane4.setViewportView(textResumoAlteracao);
+        fieldNomeAlt.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldNomeAlt.setForeground(new java.awt.Color(51, 59, 69));
+        fieldNomeAlt.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "NOME", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
 
-        fieldCodigoAlteracao.setEditable(false);
-        fieldCodigoAlteracao.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldCodigoAlteracao.setForeground(new java.awt.Color(83, 65, 43));
-        fieldCodigoAlteracao.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "CÓDIGO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
+        fieldTelefoneAlt.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldTelefoneAlt.setForeground(new java.awt.Color(51, 59, 69));
+        fieldTelefoneAlt.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "TELEFONE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
 
-        javax.swing.GroupLayout panelAlterarLayout = new javax.swing.GroupLayout(panelAlterar);
-        panelAlterar.setLayout(panelAlterarLayout);
-        panelAlterarLayout.setHorizontalGroup(
-            panelAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAlterarLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(fieldGeneroAlteracao)
-                .addGap(187, 187, 187))
-            .addGroup(panelAlterarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(panelAlterarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlterarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fieldTituloAlteracao)
-                .addContainerGap())
-            .addGroup(panelAlterarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fieldAutorAlteracao)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlterarLayout.createSequentialGroup()
-                .addContainerGap(116, Short.MAX_VALUE)
-                .addGroup(panelAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlterarLayout.createSequentialGroup()
-                        .addComponent(fieldAnoAlteracao, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlterarLayout.createSequentialGroup()
-                        .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(124, 124, 124))))
-            .addGroup(panelAlterarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlterarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fieldCodigoAlteracao)
+        fieldCEPAlt.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldCEPAlt.setForeground(new java.awt.Color(51, 59, 69));
+        fieldCEPAlt.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "CEP", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldEnderecoAlt.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldEnderecoAlt.setForeground(new java.awt.Color(51, 59, 69));
+        fieldEnderecoAlt.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "ENDEREÇO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldBairroAlt.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldBairroAlt.setForeground(new java.awt.Color(51, 59, 69));
+        fieldBairroAlt.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "BAIRRO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldMunicipioAlt.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldMunicipioAlt.setForeground(new java.awt.Color(51, 59, 69));
+        fieldMunicipioAlt.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "MUNICÍPIO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldUFAlt.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldUFAlt.setForeground(new java.awt.Color(51, 59, 69));
+        fieldUFAlt.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "ESTADO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        javax.swing.GroupLayout panelCadastro3Layout = new javax.swing.GroupLayout(panelCadastro3);
+        panelCadastro3.setLayout(panelCadastro3Layout);
+        panelCadastro3Layout.setHorizontalGroup(
+            panelCadastro3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCadastro3Layout.createSequentialGroup()
+                .addGroup(panelCadastro3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCadastro3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelCadastro3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(fieldCNPJAlt)
+                            .addComponent(fieldCEPAlt)
+                            .addComponent(fieldEnderecoAlt)
+                            .addComponent(fieldBairroAlt)
+                            .addGroup(panelCadastro3Layout.createSequentialGroup()
+                                .addComponent(fieldMunicipioAlt)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fieldUFAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fieldNomeAlt)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fieldTelefoneAlt)
+                            .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelCadastro3Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        panelAlterarLayout.setVerticalGroup(
-            panelAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAlterarLayout.createSequentialGroup()
+        panelCadastro3Layout.setVerticalGroup(
+            panelCadastro3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCadastro3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(fieldCodigoAlteracao, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldTituloAlteracao, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldAutorAlteracao, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addGroup(panelAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fieldGeneroAlteracao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldAnoAlteracao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fieldCNPJAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldNomeAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldTelefoneAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldCEPAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldEnderecoAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldBairroAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelCadastro3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldMunicipioAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldUFAlt, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(390, 390, 390))
         );
 
         javax.swing.GroupLayout dialogAlterarLayout = new javax.swing.GroupLayout(dialogAlterar.getContentPane());
         dialogAlterar.getContentPane().setLayout(dialogAlterarLayout);
         dialogAlterarLayout.setHorizontalGroup(
             dialogAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogAlterarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(panelCadastro3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         dialogAlterarLayout.setVerticalGroup(
             dialogAlterarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogAlterarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(panelCadastro3, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         dialogInformacoes.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         dialogInformacoes.setTitle("INFORMAÇÕES");
-        dialogInformacoes.setAlwaysOnTop(true);
         dialogInformacoes.setBackground(new java.awt.Color(255, 255, 255));
-        dialogInformacoes.setMinimumSize(new java.awt.Dimension(480, 620));
+        dialogInformacoes.setMinimumSize(new java.awt.Dimension(480, 780));
         dialogInformacoes.setResizable(false);
         dialogInformacoes.setLocationRelativeTo(null);
 
-        panelInformacoes.setBackground(new java.awt.Color(255, 255, 255));
+        panelCadastro2.setBackground(new java.awt.Color(255, 255, 255));
 
-        fieldGeneroInfo.setEditable(false);
-        fieldGeneroInfo.setBackground(new java.awt.Color(255, 255, 255));
-        fieldGeneroInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldGeneroInfo.setForeground(new java.awt.Color(83, 65, 43));
-        fieldGeneroInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "GÊNERO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-        fieldGeneroInfo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldGeneroInfoActionPerformed(evt);
-            }
-        });
-
-        fieldAnoInfo.setEditable(false);
-        fieldAnoInfo.setBackground(new java.awt.Color(255, 255, 255));
-        fieldAnoInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldAnoInfo.setForeground(new java.awt.Color(83, 65, 43));
-        fieldAnoInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "ANO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-        fieldAnoInfo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldAnoInfoActionPerformed(evt);
-            }
-        });
-
-        fieldTituloInfo.setEditable(false);
-        fieldTituloInfo.setBackground(new java.awt.Color(255, 255, 255));
-        fieldTituloInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldTituloInfo.setForeground(new java.awt.Color(83, 65, 43));
-        fieldTituloInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "TÍTULO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
-
-        btnOkInfo.setBackground(new java.awt.Color(133, 108, 76));
+        btnOkInfo.setBackground(new java.awt.Color(51, 59, 69));
         btnOkInfo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnOkInfo.setForeground(new java.awt.Color(255, 255, 255));
         btnOkInfo.setText("OK");
-        btnOkInfo.setToolTipText("Botão para Conectar com o banco");
+        btnOkInfo.setToolTipText("");
         btnOkInfo.setBorderPainted(false);
         btnOkInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnOkInfo.addActionListener(new java.awt.event.ActionListener() {
@@ -897,127 +882,157 @@ public class ViewPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo_1.png"))); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("INFORMAÇÕES");
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(83, 65, 43));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("CADASTRAR FORNECEDOR");
 
-        fieldAutorInfo.setEditable(false);
-        fieldAutorInfo.setBackground(new java.awt.Color(255, 255, 255));
-        fieldAutorInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        fieldAutorInfo.setForeground(new java.awt.Color(83, 65, 43));
-        fieldAutorInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "AUTOR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(83, 65, 43))); // NOI18N
+        fieldCNPJInfo.setEditable(false);
+        fieldCNPJInfo.setBackground(new java.awt.Color(255, 255, 255));
+        fieldCNPJInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldCNPJInfo.setForeground(new java.awt.Color(51, 59, 69));
+        fieldCNPJInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "CNPJ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
 
-        textResumoInfo.setEditable(false);
-        textResumoInfo.setColumns(20);
-        textResumoInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        textResumoInfo.setForeground(new java.awt.Color(83, 65, 43));
-        textResumoInfo.setLineWrap(true);
-        textResumoInfo.setRows(5);
-        textResumoInfo.setToolTipText("");
-        textResumoInfo.setWrapStyleWord(true);
-        textResumoInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(83, 65, 43), 2, true), "RESUMO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(83, 65, 43))); // NOI18N
-        jScrollPane5.setViewportView(textResumoInfo);
+        fieldNomeInfo.setEditable(false);
+        fieldNomeInfo.setBackground(new java.awt.Color(255, 255, 255));
+        fieldNomeInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldNomeInfo.setForeground(new java.awt.Color(51, 59, 69));
+        fieldNomeInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "NOME", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
 
-        javax.swing.GroupLayout panelInformacoesLayout = new javax.swing.GroupLayout(panelInformacoes);
-        panelInformacoes.setLayout(panelInformacoesLayout);
-        panelInformacoesLayout.setHorizontalGroup(
-            panelInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInformacoesLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(fieldGeneroInfo)
-                .addGap(187, 187, 187))
-            .addGroup(panelInformacoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(panelInformacoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInformacoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fieldTituloInfo)
-                .addContainerGap())
-            .addGroup(panelInformacoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(fieldAutorInfo)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInformacoesLayout.createSequentialGroup()
-                .addContainerGap(136, Short.MAX_VALUE)
-                .addGroup(panelInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInformacoesLayout.createSequentialGroup()
-                        .addComponent(fieldAnoInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInformacoesLayout.createSequentialGroup()
-                        .addComponent(btnOkInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(124, 124, 124))))
-            .addGroup(panelInformacoesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane5)
+        fieldTelefoneInfo.setEditable(false);
+        fieldTelefoneInfo.setBackground(new java.awt.Color(255, 255, 255));
+        fieldTelefoneInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldTelefoneInfo.setForeground(new java.awt.Color(51, 59, 69));
+        fieldTelefoneInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "TELEFONE", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldCEPInfo.setEditable(false);
+        fieldCEPInfo.setBackground(new java.awt.Color(255, 255, 255));
+        fieldCEPInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldCEPInfo.setForeground(new java.awt.Color(51, 59, 69));
+        fieldCEPInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "CEP", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldEnderecoInfo.setEditable(false);
+        fieldEnderecoInfo.setBackground(new java.awt.Color(255, 255, 255));
+        fieldEnderecoInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldEnderecoInfo.setForeground(new java.awt.Color(51, 59, 69));
+        fieldEnderecoInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "ENDEREÇO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldBairroInfo.setEditable(false);
+        fieldBairroInfo.setBackground(new java.awt.Color(255, 255, 255));
+        fieldBairroInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldBairroInfo.setForeground(new java.awt.Color(51, 59, 69));
+        fieldBairroInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "BAIRRO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldMunicipioInfo.setEditable(false);
+        fieldMunicipioInfo.setBackground(new java.awt.Color(255, 255, 255));
+        fieldMunicipioInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldMunicipioInfo.setForeground(new java.awt.Color(51, 59, 69));
+        fieldMunicipioInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "MUNICÍPIO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        fieldUFInfo.setEditable(false);
+        fieldUFInfo.setBackground(new java.awt.Color(255, 255, 255));
+        fieldUFInfo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldUFInfo.setForeground(new java.awt.Color(51, 59, 69));
+        fieldUFInfo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 2, true), "ESTADO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), new java.awt.Color(51, 59, 69))); // NOI18N
+
+        javax.swing.GroupLayout panelCadastro2Layout = new javax.swing.GroupLayout(panelCadastro2);
+        panelCadastro2.setLayout(panelCadastro2Layout);
+        panelCadastro2Layout.setHorizontalGroup(
+            panelCadastro2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCadastro2Layout.createSequentialGroup()
+                .addGroup(panelCadastro2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelCadastro2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelCadastro2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(fieldCNPJInfo)
+                            .addComponent(fieldCEPInfo)
+                            .addComponent(fieldEnderecoInfo)
+                            .addComponent(fieldBairroInfo)
+                            .addGroup(panelCadastro2Layout.createSequentialGroup()
+                                .addComponent(fieldMunicipioInfo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fieldUFInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fieldNomeInfo)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fieldTelefoneInfo)
+                            .addComponent(btnOkInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelCadastro2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        panelInformacoesLayout.setVerticalGroup(
-            panelInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelInformacoesLayout.createSequentialGroup()
+        panelCadastro2Layout.setVerticalGroup(
+            panelCadastro2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCadastro2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel9)
+                .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(fieldTituloInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldAutorInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addGroup(panelInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fieldGeneroInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldAnoInfo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fieldCNPJInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldNomeInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldTelefoneInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldCEPInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldEnderecoInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldBairroInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelCadastro2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldMunicipioInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldUFInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnOkInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(390, 390, 390))
         );
 
         javax.swing.GroupLayout dialogInformacoesLayout = new javax.swing.GroupLayout(dialogInformacoes.getContentPane());
         dialogInformacoes.getContentPane().setLayout(dialogInformacoesLayout);
         dialogInformacoesLayout.setHorizontalGroup(
             dialogInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelInformacoes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelCadastro2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         dialogInformacoesLayout.setVerticalGroup(
             dialogInformacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelInformacoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelCadastro2, javax.swing.GroupLayout.PREFERRED_SIZE, 757, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("BIBLIOTECA PESSOAL");
+        setTitle("CADASTRO DE FORNECEDORES");
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setFocusCycleRoot(false);
         setFocusTraversalPolicyProvider(true);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setPreferredSize(new java.awt.Dimension(960, 540));
+        panelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        panelPrincipal.setPreferredSize(new java.awt.Dimension(960, 540));
 
-        tabelaLivros.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        tabelaLivros.setForeground(new java.awt.Color(133, 108, 76));
-        tabelaLivros.setBackground(new java.awt.Color(255, 255, 255));
-        tabelaLivros.setModel(new javax.swing.table.DefaultTableModel(
+        tabelaFornecedores.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        tabelaFornecedores.setForeground(new java.awt.Color(51, 59, 69));
+        tabelaFornecedores.setBackground(new java.awt.Color(255, 255, 255));
+        tabelaFornecedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "CÓDIGO", "TÍTULO", "GÊNERO", "AUTOR", "ANO"
+                "CNPJ", "NOME", "TELEFONE"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1028,26 +1043,32 @@ public class ViewPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaLivros.setGridColor(new java.awt.Color(133, 108, 76));
-        tabelaLivros.setRowHeight(20);
-        tabelaLivros.setSelectionBackground(new java.awt.Color(133, 108, 76));
-        tabelaLivros.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        tabelaLivros.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tabelaLivros.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tabelaLivros);
-        if (tabelaLivros.getColumnModel().getColumnCount() > 0) {
-            tabelaLivros.getColumnModel().getColumn(0).setResizable(false);
-            tabelaLivros.getColumnModel().getColumn(0).setPreferredWidth(1);
-            tabelaLivros.getColumnModel().getColumn(1).setResizable(false);
-            tabelaLivros.getColumnModel().getColumn(2).setResizable(false);
-            tabelaLivros.getColumnModel().getColumn(3).setResizable(false);
-            tabelaLivros.getColumnModel().getColumn(4).setResizable(false);
+        tabelaFornecedores.setColumnSelectionAllowed(true);
+        tabelaFornecedores.setGridColor(new java.awt.Color(51, 59, 69));
+        tabelaFornecedores.setRowHeight(20);
+        tabelaFornecedores.setSelectionBackground(new java.awt.Color(51, 59, 69));
+        tabelaFornecedores.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        tabelaFornecedores.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelaFornecedores.getTableHeader().setReorderingAllowed(false);
+        tabelaFornecedores.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tabelaFornecedoresKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelaFornecedores);
+        tabelaFornecedores.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tabelaFornecedores.getColumnModel().getColumnCount() > 0) {
+            tabelaFornecedores.getColumnModel().getColumn(0).setResizable(false);
+            tabelaFornecedores.getColumnModel().getColumn(0).setPreferredWidth(1);
+            tabelaFornecedores.getColumnModel().getColumn(1).setResizable(false);
+            tabelaFornecedores.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        btnRestaurar.setBackground(new java.awt.Color(133, 108, 76));
+        btnRestaurar.setBackground(new java.awt.Color(51, 59, 69));
         btnRestaurar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnRestaurar.setForeground(new java.awt.Color(255, 255, 255));
-        btnRestaurar.setText("RESTAURAR LIVROS");
+        btnRestaurar.setText("F5 - RESTAURAR");
+        btnRestaurar.setFocusable(false);
         btnRestaurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRestaurarActionPerformed(evt);
@@ -1057,123 +1078,125 @@ public class ViewPrincipal extends javax.swing.JFrame {
         logo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
 
+        lblHora.setBackground(new java.awt.Color(255, 255, 255));
         lblHora.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        lblHora.setForeground(new java.awt.Color(83, 65, 43));
+        lblHora.setForeground(new java.awt.Color(51, 59, 69));
         lblHora.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
-        btnConexao.setBackground(new java.awt.Color(133, 108, 76));
+        btnConexao.setBackground(new java.awt.Color(51, 59, 69));
         btnConexao.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnConexao.setForeground(new java.awt.Color(255, 255, 255));
-        btnConexao.setText("CONFIGURAR CONEXÃO");
+        btnConexao.setText("F10 - CONFIGURAR CONEXÃO");
+        btnConexao.setFocusable(false);
         btnConexao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConexaoActionPerformed(evt);
             }
         });
 
-        btnInformacoes.setBackground(new java.awt.Color(133, 108, 76));
+        btnInformacoes.setBackground(new java.awt.Color(51, 59, 69));
         btnInformacoes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnInformacoes.setForeground(new java.awt.Color(255, 255, 255));
-        btnInformacoes.setText("VER INFORMAÇÕES");
+        btnInformacoes.setText("F1 - INFORMAÇÕES");
+        btnInformacoes.setFocusable(false);
         btnInformacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInformacoesActionPerformed(evt);
             }
         });
 
-        btnCadastro.setBackground(new java.awt.Color(133, 108, 76));
+        btnCadastro.setBackground(new java.awt.Color(51, 59, 69));
         btnCadastro.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnCadastro.setForeground(new java.awt.Color(255, 255, 255));
-        btnCadastro.setText("CADASTRAR LIVRO");
+        btnCadastro.setText("F2 - CADASTRAR");
+        btnCadastro.setFocusable(false);
         btnCadastro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastroActionPerformed(evt);
             }
         });
 
-        btnAltera.setBackground(new java.awt.Color(133, 108, 76));
+        btnAltera.setBackground(new java.awt.Color(51, 59, 69));
         btnAltera.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnAltera.setForeground(new java.awt.Color(255, 255, 255));
-        btnAltera.setText("ALTERAR LIVRO");
+        btnAltera.setText("F3 - ALTERAR");
+        btnAltera.setFocusable(false);
         btnAltera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAlteraActionPerformed(evt);
             }
         });
 
-        btnExcluir.setBackground(new java.awt.Color(133, 108, 76));
+        btnExcluir.setBackground(new java.awt.Color(51, 59, 69));
         btnExcluir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnExcluir.setForeground(new java.awt.Color(255, 255, 255));
-        btnExcluir.setText("EXCLUIR LIVRO");
+        btnExcluir.setText("F4 - EXCLUIR");
+        btnExcluir.setFocusable(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
             }
         });
 
-        btnHide.setMaximumSize(new java.awt.Dimension(0, 0));
-        btnHide.setMinimumSize(new java.awt.Dimension(0, 0));
-        btnHide.setPreferredSize(new java.awt.Dimension(0, 0));
-        btnHide.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                btnHideKeyPressed(evt);
+        fieldBusca.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fieldBusca.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(51, 59, 69), 1, true), "Buscar:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(51, 59, 69))); // NOI18N
+        fieldBusca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                fieldBuscaKeyTyped(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
+        panelPrincipal.setLayout(panelPrincipalLayout);
+        panelPrincipalLayout.setHorizontalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnInformacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnAltera, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(logo)
-                        .addGap(129, 129, 129)
-                        .addComponent(btnHide, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(logo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnConexao))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblHora, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnConexao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblHora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap())
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(btnInformacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAltera, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fieldBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAltera, btnCadastro, btnExcluir, btnInformacoes, btnRestaurar});
+        panelPrincipalLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAltera, btnCadastro, btnExcluir, btnInformacoes, btnRestaurar});
 
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        panelPrincipalLayout.setVerticalGroup(
+            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(logo)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblHora, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnHide, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(65, 65, 65)))
+                    .addGroup(panelPrincipalLayout.createSequentialGroup()
+                        .addComponent(lblHora, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnConexao, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInformacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1182,25 +1205,24 @@ public class ViewPrincipal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAltera, btnCadastro, btnExcluir, btnInformacoes, btnRestaurar});
+        panelPrincipalLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAltera, btnCadastro, btnExcluir, btnInformacoes, btnRestaurar});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1044, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 1024, Short.MAX_VALUE)
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void fieldIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldIPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldIPActionPerformed
 
     private void fieldPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldPasswordMouseClicked
         // TODO add your handling code here:
@@ -1241,10 +1263,10 @@ public class ViewPrincipal extends javax.swing.JFrame {
         cadastro.consultar(this, "informacoes");
     }//GEN-LAST:event_btnInformacoesActionPerformed
 
-    private void btnRestaurarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarJogoActionPerformed
+    private void btnRestaurarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurarFornecedorActionPerformed
         // TODO add your handling code here:
         cadastro.restaurar(this);
-    }//GEN-LAST:event_btnRestaurarJogoActionPerformed
+    }//GEN-LAST:event_btnRestaurarFornecedorActionPerformed
 
     private void btnCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastroActionPerformed
         // TODO add your handling code here:
@@ -1261,63 +1283,94 @@ public class ViewPrincipal extends javax.swing.JFrame {
         cadastro.excluir(this);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    private void fieldGeneroCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldGeneroCadastroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldGeneroCadastroActionPerformed
-
-    private void fieldAnoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldAnoCadastroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldAnoCadastroActionPerformed
-
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
         cadastro.cadastrar(this);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+    private void fieldCNPJCadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCNPJCadKeyPressed
         // TODO add your handling code here:
-        cadastro.alterar(this);
-    }//GEN-LAST:event_btnAlterarActionPerformed
-
-    private void fieldGeneroInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldGeneroInfoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldGeneroInfoActionPerformed
-
-    private void fieldAnoInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldAnoInfoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldAnoInfoActionPerformed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
+            ControllerJson reader = new ControllerJson();
+            try {
+                reader.eanReader(this);
+            }
+            catch (IOException ex) {
+                Logger.getLogger(ViewPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_fieldCNPJCadKeyPressed
 
     private void btnOkInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkInfoActionPerformed
         // TODO add your handling code here:
         dialogInformacoes.dispose();
     }//GEN-LAST:event_btnOkInfoActionPerformed
 
-    private void fieldCodigoCadastroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCodigoCadastroKeyPressed
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER){
-            int opcao = JOptionPane.showConfirmDialog(null, "Deseja consultar o código online?", "CONSULTAR CÓDIGO", JOptionPane.YES_NO_OPTION);
-            
-            if(opcao == 0){
-                ControllerEANReader reader = new ControllerEANReader();
-                try {
-                    reader.eanReader(this);
-                }
-                catch (IOException ex) {
-                    Logger.getLogger(ViewPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }//GEN-LAST:event_fieldCodigoCadastroKeyPressed
+        cadastro.alterar(this);
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
-    private void btnHideKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnHideKeyPressed
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_F2){
-            int opcao = JOptionPane.showConfirmDialog(null, "Deseja inserir o token da API de consulta?", "TOKEN", JOptionPane.YES_NO_OPTION);
-            if(opcao == 0){
-                setApiToken(JOptionPane.showInputDialog("Digite o token: "));
-            }
+        if(evt.getKeyCode() == KeyEvent.VK_F1){
+            JOptionPane.showMessageDialog(null, "Nenhum fornecedor selecionado!");
         }
-    }//GEN-LAST:event_btnHideKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_F2){
+            btnCadastro.doClick();
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_F3){
+            JOptionPane.showMessageDialog(null, "Nenhum fornecedor selecionado!");
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_F4){
+            JOptionPane.showMessageDialog(null, "Nenhum fornecedor selecionado!");
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_F5){
+            btnRestaurar.doClick();
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_F10){
+            btnConexao.doClick();
+        }
+    }//GEN-LAST:event_formKeyPressed
+
+    private void fieldBuscaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldBuscaKeyTyped
+        // TODO add your handling code here:
+        cadastro.filtrarDados(this, "ativos");
+    }//GEN-LAST:event_fieldBuscaKeyTyped
+
+    private void tabelaFornecedoresKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tabelaFornecedoresKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_F1){
+            btnInformacoes.doClick();
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_F2){
+            btnCadastro.doClick();
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_F3){
+            btnAltera.doClick();
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_F4){
+            btnExcluir.doClick();
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_F5){
+            btnRestaurar.doClick();
+        }
+        if(evt.getKeyCode() == KeyEvent.VK_F10){
+            btnConexao.doClick();
+        }
+    }//GEN-LAST:event_tabelaFornecedoresKeyPressed
+
+    private void fieldBuscaInativosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldBuscaInativosKeyTyped
+        // TODO add your handling code here:
+        cadastro.filtrarDados(this, "inativos");
+    }//GEN-LAST:event_fieldBuscaInativosKeyTyped
+
+    private void dialogCadastrarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dialogCadastrarKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnCadastrar.doClick();
+        }
+    }//GEN-LAST:event_dialogCadastrarKeyPressed
 
     /**
      * @param args the command line arguments
@@ -1352,6 +1405,7 @@ public class ViewPrincipal extends javax.swing.JFrame {
                 try {
                     ViewPrincipal view = new ViewPrincipal();
                     view.setLocationRelativeTo(null);
+                    view.setFocusable(true);
                     view.setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(ViewPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -1368,34 +1422,45 @@ public class ViewPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnConectar;
     private javax.swing.JButton btnConexao;
     private javax.swing.JButton btnExcluir;
-    private javax.swing.JButton btnHide;
     private javax.swing.JButton btnInformacoes;
     private javax.swing.JButton btnOkInfo;
     private javax.swing.JButton btnRestaurar;
-    private javax.swing.JButton btnRestaurarJogo;
+    private javax.swing.JButton btnRestaurarFornecedor;
     private javax.swing.JDialog dialogAlterar;
     private javax.swing.JDialog dialogCadastrar;
     private javax.swing.JDialog dialogConexao;
     private javax.swing.JDialog dialogInformacoes;
     private javax.swing.JDialog dialogRestaurar;
-    private javax.swing.JTextField fieldAnoAlteracao;
-    private javax.swing.JTextField fieldAnoCadastro;
-    private javax.swing.JTextField fieldAnoInfo;
-    private javax.swing.JTextField fieldAutorAlteracao;
-    private javax.swing.JTextField fieldAutorCadastro;
-    private javax.swing.JTextField fieldAutorInfo;
-    private javax.swing.JTextField fieldCodigoAlteracao;
-    private javax.swing.JTextField fieldCodigoCadastro;
-    private javax.swing.JTextField fieldGeneroAlteracao;
-    private javax.swing.JTextField fieldGeneroCadastro;
-    private javax.swing.JTextField fieldGeneroInfo;
+    private javax.swing.JTextField fieldBairroAlt;
+    private javax.swing.JTextField fieldBairroCad;
+    private javax.swing.JTextField fieldBairroInfo;
+    private javax.swing.JTextField fieldBusca;
+    private javax.swing.JTextField fieldBuscaInativos;
+    private javax.swing.JTextField fieldCEPAlt;
+    private javax.swing.JTextField fieldCEPCad;
+    private javax.swing.JTextField fieldCEPInfo;
+    private javax.swing.JTextField fieldCNPJAlt;
+    private javax.swing.JTextField fieldCNPJCad;
+    private javax.swing.JTextField fieldCNPJInfo;
+    private javax.swing.JTextField fieldEnderecoAlt;
+    private javax.swing.JTextField fieldEnderecoCad;
+    private javax.swing.JTextField fieldEnderecoInfo;
     private javax.swing.JTextField fieldIP;
+    private javax.swing.JTextField fieldMunicipioAlt;
+    private javax.swing.JTextField fieldMunicipioCad;
+    private javax.swing.JTextField fieldMunicipioInfo;
+    private javax.swing.JTextField fieldNomeAlt;
+    private javax.swing.JTextField fieldNomeCad;
     private javax.swing.JTextField fieldNomeDB;
+    private javax.swing.JTextField fieldNomeInfo;
     private javax.swing.JPasswordField fieldPassword;
     private javax.swing.JTextField fieldPorta;
-    private javax.swing.JTextField fieldTituloAlteracao;
-    private javax.swing.JTextField fieldTituloCadastro;
-    private javax.swing.JTextField fieldTituloInfo;
+    private javax.swing.JTextField fieldTelefoneAlt;
+    private javax.swing.JTextField fieldTelefoneCad;
+    private javax.swing.JTextField fieldTelefoneInfo;
+    private javax.swing.JTextField fieldUFAlt;
+    private javax.swing.JTextField fieldUFCad;
+    private javax.swing.JTextField fieldUFInfo;
     private javax.swing.JTextField fieldUser;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -1408,23 +1473,17 @@ public class ViewPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblHora;
     private javax.swing.JLabel logo;
-    private javax.swing.JPanel panelAlterar;
     private javax.swing.JPanel panelCadastro;
+    private javax.swing.JPanel panelCadastro2;
+    private javax.swing.JPanel panelCadastro3;
     private javax.swing.JPanel panelConexao;
-    private javax.swing.JPanel panelInformacoes;
+    private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelRestaurar;
-    private javax.swing.JTable tabelaLivros;
-    private javax.swing.JTable tabelaLivrosExcluidos;
-    private javax.swing.JTextArea textResumoAlteracao;
-    private javax.swing.JTextArea textResumoCadastro;
-    private javax.swing.JTextArea textResumoInfo;
+    private javax.swing.JTable tabelaFornecedores;
+    private javax.swing.JTable tabelaFornecedoresInativos;
     // End of variables declaration//GEN-END:variables
 }
