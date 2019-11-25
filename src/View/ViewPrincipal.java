@@ -1293,7 +1293,7 @@ public class ViewPrincipal extends javax.swing.JFrame{
         if (evt.getKeyCode() == KeyEvent.VK_ENTER){
             ControllerJson reader = new ControllerJson();
             try {
-                reader.eanReader(this);
+                reader.cnpjFromJson(this);
             }
             catch (IOException ex) {
                 Logger.getLogger(ViewPrincipal.class.getName()).log(Level.SEVERE, null, ex);

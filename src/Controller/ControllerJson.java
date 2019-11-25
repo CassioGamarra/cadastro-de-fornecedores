@@ -14,7 +14,7 @@ public class ControllerJson {
     public ControllerJson(){}
 
     
-    public void eanReader(ViewPrincipal view) throws IOException{
+    public void cnpjFromJson(ViewPrincipal view) throws IOException{
         ModelJson reader = new ModelJson();
         String cnpj = view.getFieldCNPJCad().getText();
         cnpj = cnpj.replaceAll("\\D", "");
