@@ -35,13 +35,13 @@ public class ModelCadastro {
         String cnpj, nome, telefone, cep, endereco, bairro, municipio, uf;
         
         cnpj = fornecedor.getCNPJ();
-        nome = fornecedor.getNome();
+        nome = fornecedor.getNome().toUpperCase();
         telefone = fornecedor.getTelefone();
         cep = fornecedor.getCEP();
-        endereco = fornecedor.getEndereco();
-        bairro = fornecedor.getBairro();
-        municipio = fornecedor.getMunicipio();
-        uf = fornecedor.getUF();
+        endereco = fornecedor.getEndereco().toUpperCase();
+        bairro = fornecedor.getBairro().toUpperCase();
+        municipio = fornecedor.getMunicipio().toUpperCase();
+        uf = fornecedor.getUF().toUpperCase();
 
         String sql = "INSERT INTO fornecedor (cnpj, nome, telefone, cep, endereco, bairro, municipio, uf, status) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -96,10 +96,18 @@ public class ModelCadastro {
     
     //Alterar
     public boolean alterar(Fornecedor fornecedor){
-        String sql = "UPDATE fornecedor SET nome = '"+fornecedor.getNome()+"',"
+        String nome, endereco, bairro, municipio, uf;
+        
+        nome = fornecedor.getNome().toUpperCase();
+        endereco = fornecedor.getEndereco().toUpperCase();
+        bairro = fornecedor.getBairro().toUpperCase();
+        municipio = fornecedor.getMunicipio().toUpperCase();
+        uf = fornecedor.getUF().toUpperCase();
+        
+        String sql = "UPDATE fornecedor SET nome = '"+nome+"',"
                 + "telefone = '"+fornecedor.getTelefone()+"', cep = '"+fornecedor.getCEP()+"',"
-                + "endereco = '"+fornecedor.getEndereco()+"', bairro = '"+fornecedor.getBairro()+"',"
-                + "municipio = '"+fornecedor.getMunicipio()+"', uf = '"+fornecedor.getUF()+"'WHERE cnpj = '"+fornecedor.getCNPJ()+"'";
+                + "endereco = '"+endereco+"', bairro = '"+bairro+"',"
+                + "municipio = '"+municipio+"', uf = '"+uf+"'WHERE cnpj = '"+fornecedor.getCNPJ()+"'";
         PreparedStatement stmt;
         try {
             stmt = conexao.conectarBanco().prepareStatement(sql);
